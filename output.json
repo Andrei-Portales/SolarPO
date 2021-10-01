@@ -1,0 +1,121 @@
+[
+  {
+    "category": "solar_fluxes_and_related",
+    "items": [
+      {
+        "name": "All Sky Surface Shortwave Downward Irradiance",
+        "value": "ALLSKY_SFC_SW_DWN"
+      },
+      {
+        "name": "Clear Sky Surface Shortwave Downward Irradiance",
+        "value": "CLRSKY_SFC_SW_DWN"
+      },
+      {
+        "name": "All Sky Surface Shortwave Downward Direct Normal Irradiance",
+        "value": "ALLSKY_SFC_SW_DNI"
+      },
+      {
+        "name": "All Sky Surface Shortwave Diffuse Irradiance",
+        "value": "ALLSKY_SFC_SW_DIFF"
+      },
+      { "name": "All Sky Insolation Clearness Index", "value": "ALLSKY_KT" },
+      {
+        "name": "All Sky Normalized Insolation Clearness Index",
+        "value": "ALLSKY_NKT"
+      },
+      { "name": "Clear Sky Insolation Clearness Index", "value": "CLRSKY_KT" },
+      {
+        "name": "Clear Sky Normalized Insolation Clearness Index",
+        "value": "CLRSKY_NKT"
+      },
+      { "name": "All Sky Surface Albedo", "value": "ALLSKY_SRF_ALB" },
+      {
+        "name": "Top-Of-Atmosphere Shortwave Downward Irradiance",
+        "value": "TOA_SW_DWN"
+      },
+      { "name": "Cloud Amount", "value": "CLOUD_AMT" },
+      {
+        "name": "All Sky Surface Photosynthetically Active Radiation (PAR) Total",
+        "value": "ALLSKY_SFC_PAR_TOT"
+      },
+      {
+        "name": "Clear Sky Surface Photosynthetically Active Radiation (PAR) Total",
+        "value": "CLRSKY_SFC_PAR_TOT"
+      },
+      { "name": "All Sky Surface UVA Irradiance", "value": "ALLSKY_SFC_UVA" },
+      { "name": "All Sky Surface UVB Irradiance", "value": "ALLSKY_SFC_UVB" },
+      { "name": "All Sky Surface UV Index", "value": "ALLSKY_SFC_UV_INDEX" }
+    ]
+  },
+  {
+    "category": "parameters_for_tilted_pv_panels",
+    "items": [
+      {
+        "name": "All Sky Surface Shortwave Downward Irradiance",
+        "value": "ALLSKY_SFC_SW_DWN:42"
+      },
+      {
+        "name": "Clear Sky Surface Shortwave Downward Irradiance",
+        "value": "CLRSKY_SFC_SW_DWN:73"
+      },
+      { "name": "All Sky Surface Albedo", "value": "ALLSKY_SRF_ALB:80" },
+      { "name": "All Sky Insolation Clearness Index", "value": "ALLSKY_KT:71" },
+      {
+        "name": "All Sky Normalized Insolation Clearness Index",
+        "value": "ALLSKY_NKT:83"
+      }
+    ]
+  },
+  {
+    "category": "parameters_for_solar_cooking",
+    "items": [
+      {
+        "name": "All Sky Surface Shortwave Downward Irradiance",
+        "value": "ALLSKY_SFC_SW_DWN:89"
+      },
+      {
+        "name": "Clear Sky Surface Shortwave Downward Irradiance",
+        "value": "CLRSKY_SFC_SW_DWN:76"
+      },
+      { "name": "Wind Speed at 2 Meters", "value": "WS2M" }
+    ]
+  },
+  {
+    "category": "temperature_thermal_ir_flux",
+    "items": [
+      { "name": "Temperature at 2 Meters", "value": "T2M" },
+      { "name": "Dew/Frost Point at 2 Meters", "value": "T2MDEW" },
+      { "name": "Wet Bulb Temperature at 2 Meters", "value": "T2MWET" },
+      { "name": "Earth Skin Temperature", "value": "TS" },
+      { "name": "Temperature at 2 Meters Range", "value": "T2M_RANGE" },
+      { "name": "Temperature at 2 Meters Maximum", "value": "T2M_MAX" },
+      { "name": "Temperature at 2 Meters Minimum", "value": "T2M_MIN" },
+      {
+        "name": "All Sky Surface Longwave Downward Irradiance",
+        "value": "ALLSKY_SFC_LW_DWN"
+      }
+    ]
+  },
+  {
+    "category": "humidity_precipitation",
+    "items": [
+      { "name": "Specific Humidity at 2 Meters", "value": "QV2M" },
+      { "name": "Relative Humidity at 2 Meters", "value": "RH2M" },
+      { "name": "Precipitation ", "value": "PRECTOTCORR" }
+    ]
+  },
+  {
+    "category": "wind_pressure",
+    "items": [
+      { "name": "Surface Pressure", "value": "PS" },
+      { "name": "Wind Speed at 10 Meters", "value": "WS10M" },
+      { "name": "Wind Speed at 10 Meters Maximum", "value": "WS10M_MAX" },
+      { "name": "Wind Speed at 10 Meters Minimum", "value": "WS10M_MIN" },
+      { "name": "Wind Speed at 10 Meters Range", "value": "WS10M_RANGE" },
+      { "name": "Wind Speed at 50 Meters", "value": "WS50M" },
+      { "name": "Wind Speed at 50 Meters Maximum", "value": "WS50M_MAX" },
+      { "name": "Wind Speed at 50 Meters Minimum", "value": "WS50M_MIN" },
+      { "name": "Wind Speed at 50 Meters Range", "value": "WS50M_RANGE" }
+    ]
+  }
+]
