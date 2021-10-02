@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
-import 'package:solar_app/screens/result_screen.dart';
-import 'package:solar_app/util/parameters.dart';
-import 'package:solar_app/widgets/widget_to_image.dart';
+import '../screens/result_screen.dart';
+import '../util/parameters.dart';
+import '../widgets/widget_to_image.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultCardMonth extends StatefulWidget {
@@ -88,19 +88,17 @@ class _ResultCardMonthState extends State<ResultCardMonth> {
               builder: (key) {
                 this._globalKey = key;
                 return Container(
+                  padding: EdgeInsets.all(5),
                   color: Colors.white,
                   child: Column(
                     children: [
-                      Text(
-                        '${paramKeys[widget.keyD]} (${widget.widget.temporalType})',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
                       const Divider(color: Colors.grey),
                       const SizedBox(height: 10),
                       SfCartesianChart(
+                          title: ChartTitle(
+                            text:
+                                '${paramKeys[widget.keyD]} (${widget.widget.temporalType})',
+                          ),
                           zoomPanBehavior: _zoomPanBehavior,
                           primaryXAxis: CategoryAxis(),
                           series: <LineSeries<String, String>>[

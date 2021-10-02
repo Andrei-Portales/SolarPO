@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
-import 'package:solar_app/screens/result_screen.dart';
-import 'package:solar_app/util/parameters.dart';
-import 'package:solar_app/widgets/widget_to_image.dart';
+import '../screens/result_screen.dart';
+import '../util/parameters.dart';
+import '../widgets/widget_to_image.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultCardDay extends StatefulWidget {
@@ -114,59 +114,57 @@ class _ResultCardDayState extends State<ResultCardDay> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    DropdownButton<String>(
+                      value: _currentYear,
+                      onChanged: (value) => onYearChanges(value!),
+                      items: _years.map<DropdownMenuItem<String>>((e) {
+                        return DropdownMenuItem<String>(
+                          child: Text('$e'),
+                          value: e,
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(width: 15),
+                    DropdownButton<String>(
+                      value: _currentMonth,
+                      onChanged: (value) {
+                        setState(() {
+                          _currentMonth = value!;
+                        });
+                      },
+                      items: _months.map<DropdownMenuItem<String>>((e) {
+                        return DropdownMenuItem<String>(
+                          child: Text('$e'),
+                          value: e,
+                        );
+                      }).toList(),
+                    ),
+                    const SizedBox(width: 15),
+                  ],
+                ),
                 IconButton(
-                    onPressed: _capturePng, icon: const Icon(Icons.share)),
+                  onPressed: _capturePng,
+                  icon: const Icon(Icons.share),
+                ),
               ],
             ),
             WidgetToImage(
               builder: (key) {
                 this._globalKey = key;
                 return Container(
+                  padding: EdgeInsets.all(5),
                   color: Colors.white,
                   child: Column(
                     children: [
-                      Text(
-                        '${paramKeys[widget.keyD]} (${widget.widget.temporalType})',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          DropdownButton<String>(
-                            value: _currentYear,
-                            onChanged: (value) => onYearChanges(value!),
-                            items: _years.map<DropdownMenuItem<String>>((e) {
-                              return DropdownMenuItem<String>(
-                                child: Text('$e'),
-                                value: e,
-                              );
-                            }).toList(),
-                          ),
-                          const SizedBox(width: 15),
-                          DropdownButton<String>(
-                            value: _currentMonth,
-                            onChanged: (value) {
-                              setState(() {
-                                _currentMonth = value!;
-                              });
-                            },
-                            items: _months.map<DropdownMenuItem<String>>((e) {
-                              return DropdownMenuItem<String>(
-                                child: Text('$e'),
-                                value: e,
-                              );
-                            }).toList(),
-                          ),
-                          const SizedBox(width: 15),
-                        ],
-                      ),
                       const Divider(color: Colors.grey),
                       const SizedBox(height: 5),
                       SfCartesianChart(
+                          title: ChartTitle(
+                              text:
+                                  '${paramKeys[widget.keyD]} (${widget.widget.temporalType})'),
                           zoomPanBehavior: _zoomPanBehavior,
                           primaryXAxis: CategoryAxis(),
                           series: <LineSeries<String, String>>[

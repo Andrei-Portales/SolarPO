@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solar_app/widgets/param_item.dart';
+import '../widgets/param_item.dart';
 
 class ParametersSelect extends StatelessWidget {
   final List<Map<String, dynamic>> parameters;

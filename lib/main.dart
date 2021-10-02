@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solar_app/screens/home.dart';
+import 'package:solar_po/screens/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,13 +11,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Portales Solar',
+      title: 'SolarPO',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color.fromRGBO(11, 61, 145, 1),
+          backgroundColor: Colors.black,
         ),
       ),
-      home: const Home(),
+      home: const SplashScreen(),
     );
   }
 }

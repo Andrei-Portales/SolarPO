@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:solar_app/util/transform_data.dart';
-import 'package:solar_app/widgets/result_card_daily.dart';
-import 'package:solar_app/widgets/result_card_month.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_extend/share_extend.dart';
+import '../util/transform_data.dart';
+import '../widgets/result_card_daily.dart';
+import '../widgets/result_card_month.dart';
+import 'dart:io';
+import 'dart:convert';
 
 class ResultScreen extends StatefulWidget {
   final String temporalType;
@@ -105,11 +109,36 @@ class _ResultScreenState extends State<ResultScreen> {
     setWidgets();
   }
 
+  Future<void> _shareRawData() async {
+    try {
+      final directory = await getApplicationDocumentsDirectory();
+
+      File file = File(
+          '${directory.path}/data_${widget.temporalType}_${DateTime.now().toIso8601String()}.json');
+
+      await file.writeAsString(json.encode(widget.data));
+
+      await ShareExtend.share(file.path, 'file/json');
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(const SnackBar(
+          content: Text('Cant share data, try later...'),
+        ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Result'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: _shareRawData,
+          ),
+        ],
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {

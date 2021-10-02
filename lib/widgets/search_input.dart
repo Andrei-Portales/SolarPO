@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
-import 'package:solar_app/screens/result_screen.dart';
-import 'package:solar_app/util/parameters.dart';
-import 'package:solar_app/widgets/date_select.dart';
+import '../screens/result_screen.dart';
+import '../util/parameters.dart';
+import './date_select.dart';
 import 'dart:convert';
-
-import 'package:solar_app/widgets/map_button.dart';
-import 'package:solar_app/widgets/parameters_select.dart';
+import './map_button.dart';
+import './parameters_select.dart';
 
 class SearchInput extends StatefulWidget {
   const SearchInput({Key? key}) : super(key: key);
@@ -343,6 +342,7 @@ class _SearchInputState extends State<SearchInput> {
           _isLoading
               ? const Center(child: CircularProgressIndicator())
               : ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.black),
                   onPressed: _search,
                   child: const Text('Search'),
                 ),

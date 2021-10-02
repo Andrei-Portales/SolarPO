@@ -1,4 +1,4 @@
-import 'package:solar_app/util/parameters.dart';
+import '../util/parameters.dart';
 
 Map<String, dynamic> monthlyData(Map<String, dynamic> keys) {
   Map<String, dynamic> data = {};
