@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
@@ -8,7 +6,6 @@ import 'package:screenshot/screenshot.dart';
 import 'package:share_extend/share_extend.dart';
 import '../screens/result_screen.dart';
 import '../util/parameters.dart';
-import '../widgets/widget_to_image.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultCardDay extends StatefulWidget {
