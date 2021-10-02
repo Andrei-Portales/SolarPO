@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
+import 'package:solar_po/util/pdf.dart';
 import '../util/transform_data.dart';
 import '../widgets/result_card_daily.dart';
 import '../widgets/result_card_month.dart';
@@ -22,8 +23,14 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen> {
   List<Widget> _widgets = [];
+  bool _isLoadingPdf = false;
 
-  List<GlobalKey> _globalKeys = [];
+  String formatDate(String date) {
+    String year = date.substring(0, 4);
+    String month = date.substring(4, 6);
+    String day = date.substring(6, 8);
+    return '$year-$month-$day';
+  }
 
   Widget getGeneralText(String text) {
     return Container(
@@ -36,8 +43,6 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   void setWidgets() {
-    // text.substring(8, text.length)
-
     Map<String, dynamic> data = {};
 
     if (widget.temporalType == 'monthly') {
@@ -71,10 +76,10 @@ class _ResultScreenState extends State<ResultScreen> {
                 'Elevation: ${widget.data['geometry']['coordinates'][2]} meters',
               ),
               getGeneralText(
-                'Start time: ${widget.data['header']['start']}',
+                'Start time: ${formatDate(widget.data['header']['start'])}',
               ),
               getGeneralText(
-                'End time: ${widget.data['header']['end']}',
+                'End time: ${formatDate(widget.data['header']['end'])}',
               ),
             ],
           ),
@@ -103,6 +108,32 @@ class _ResultScreenState extends State<ResultScreen> {
     ];
   }
 
+  Future<void> _generatePdf() async {
+    bool result = true;
+
+    setState(() {
+      _isLoadingPdf = true;
+    });
+
+    if (widget.temporalType == 'monthly') {
+      result = await generatePdfMonthly(data: widget.data);
+    } else {
+      result = await generatePdfDaily(data: widget.data);
+    }
+
+    setState(() {
+      _isLoadingPdf = false;
+    });
+
+    if (!result) {
+      ScaffoldMessenger.of(context)
+        ..hideCurrentSnackBar()
+        ..showSnackBar(
+          const SnackBar(content: Text('Cant create pdf, try again later...')),
+        );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -118,7 +149,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
       await file.writeAsString(json.encode(widget.data));
 
-      await ShareExtend.share(file.path, 'file/json');
+      await ShareExtend.share(file.path, 'application/json');
     } catch (e) {
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
@@ -134,6 +165,15 @@ class _ResultScreenState extends State<ResultScreen> {
       appBar: AppBar(
         title: const Text('Result'),
         actions: [
+          if (!_isLoadingPdf)
+            IconButton(
+              icon: Icon(Icons.picture_as_pdf),
+              onPressed: _generatePdf,
+            ),
+          if (_isLoadingPdf)
+            Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            ),
           IconButton(
             icon: const Icon(Icons.share),
             onPressed: _shareRawData,

@@ -1,13 +1,11 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:share_extend/share_extend.dart';
 import '../screens/result_screen.dart';
 import '../util/parameters.dart';
-import '../widgets/widget_to_image.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ResultCardMonth extends StatefulWidget {
@@ -28,23 +26,18 @@ class ResultCardMonth extends StatefulWidget {
 
 class _ResultCardMonthState extends State<ResultCardMonth> {
   late ZoomPanBehavior _zoomPanBehavior;
-  GlobalKey? _globalKey;
+  ScreenshotController _controller = ScreenshotController();
 
   Future<void> _capturePng() async {
     try {
-      if (_globalKey == null) return;
+      final bytes = await _controller.capture();
 
-      RenderRepaintBoundary boundary = _globalKey!.currentContext!
-          .findRenderObject() as RenderRepaintBoundary;
+      if (bytes == null) return;
 
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      final pngBytes = byteData!.buffer.asUint8List();
       final directory = await getApplicationDocumentsDirectory();
 
       File file = File('${directory.path}/${widget.keyD}.png');
-      await file.writeAsBytes(pngBytes);
+      await file.writeAsBytes(bytes);
 
       await ShareExtend.share(file.path, 'image');
     } catch (e) {
@@ -84,41 +77,38 @@ class _ResultCardMonthState extends State<ResultCardMonth> {
                     onPressed: _capturePng, icon: const Icon(Icons.share)),
               ],
             ),
-            WidgetToImage(
-              builder: (key) {
-                this._globalKey = key;
-                return Container(
-                  padding: EdgeInsets.all(5),
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      const Divider(color: Colors.grey),
-                      const SizedBox(height: 10),
-                      SfCartesianChart(
-                          title: ChartTitle(
-                            text:
-                                '${paramKeys[widget.keyD]} (${widget.widget.temporalType})',
-                          ),
-                          zoomPanBehavior: _zoomPanBehavior,
-                          primaryXAxis: CategoryAxis(),
-                          series: <LineSeries<String, String>>[
-                            LineSeries<String, String>(
-                              dataSource:
-                                  widget.data[widget.keyD].keys.toList(),
-                              xValueMapper: (String key1, _) => key1,
-                              yValueMapper: (String key1, _) =>
-                                  widget.data[widget.keyD][key1],
-                            )
-                          ]),
-                      const SizedBox(height: 5),
-                      Text(
-                        'Units: ${widget.widget.data['parameters'][widget.keyD]['units']}',
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+            Screenshot(
+              child: Container(
+                padding: EdgeInsets.all(5),
+                color: Colors.white,
+                child: Column(
+                  children: [
+                    const Divider(color: Colors.grey),
+                    const SizedBox(height: 10),
+                    SfCartesianChart(
+                        title: ChartTitle(
+                          text:
+                              '${paramKeys[widget.keyD]} (${widget.widget.temporalType})',
+                        ),
+                        zoomPanBehavior: _zoomPanBehavior,
+                        primaryXAxis: CategoryAxis(),
+                        series: <LineSeries<String, String>>[
+                          LineSeries<String, String>(
+                            dataSource: widget.data[widget.keyD].keys.toList(),
+                            xValueMapper: (String key1, _) => key1,
+                            yValueMapper: (String key1, _) =>
+                                widget.data[widget.keyD][key1],
+                          )
+                        ]),
+                    const SizedBox(height: 5),
+                    Text(
+                      'Units: ${widget.widget.data['parameters'][widget.keyD]['units']}',
+                    ),
+                  ],
+                ),
+              ),
+              controller: _controller,
+            )
           ],
         ),
       ),

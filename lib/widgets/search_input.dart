@@ -342,7 +342,9 @@ class _SearchInputState extends State<SearchInput> {
           _isLoading
               ? const Center(child: CircularProgressIndicator())
               : ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.black),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.black,
+                  ),
                   onPressed: _search,
                   child: const Text('Search'),
                 ),
