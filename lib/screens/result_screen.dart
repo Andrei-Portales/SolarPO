@@ -32,10 +32,14 @@ class _ResultScreenState extends State<ResultScreen> {
     return '$year-$month-$day';
   }
 
-  Widget getGeneralText(String text) {
-    return Container(
-      margin: const EdgeInsets.all(5),
-      child: Text(
+  Widget getGeneralText(String title, String text, IconData icon) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        color: Colors.black,
+      ),
+      title: Text(title),
+      subtitle: Text(
         text,
         style: const TextStyle(fontSize: 20),
       ),
@@ -67,19 +71,29 @@ class _ResultScreenState extends State<ResultScreen> {
               const Divider(color: Colors.grey),
               const SizedBox(height: 10),
               getGeneralText(
-                'Longitude: ${widget.data['geometry']['coordinates'][1].toStringAsFixed(4)}',
+                'Longitude',
+                '${widget.data['geometry']['coordinates'][1].toStringAsFixed(4)}',
+                Icons.location_on_outlined,
               ),
               getGeneralText(
-                'Latitude: ${widget.data['geometry']['coordinates'][0].toStringAsFixed(4)}',
+                'Latitude',
+                '${widget.data['geometry']['coordinates'][0].toStringAsFixed(4)}',
+                Icons.location_on,
               ),
               getGeneralText(
-                'Elevation: ${widget.data['geometry']['coordinates'][2]} meters',
+                'Elevation',
+                '${widget.data['geometry']['coordinates'][2]} meters',
+                Icons.grain_rounded,
               ),
               getGeneralText(
-                'Start time: ${formatDate(widget.data['header']['start'])}',
+                'Start time',
+                '${formatDate(widget.data['header']['start'])}',
+                Icons.timer,
               ),
               getGeneralText(
-                'End time: ${formatDate(widget.data['header']['end'])}',
+                'End time',
+                '${formatDate(widget.data['header']['end'])}',
+                Icons.timer_outlined,
               ),
             ],
           ),
